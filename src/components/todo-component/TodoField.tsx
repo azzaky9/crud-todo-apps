@@ -7,15 +7,11 @@ import { db } from "@/auth/config";
 import { FirebaseError } from "firebase/app";
 import { v4 as uuid } from "uuid";
 import { useMutation } from "react-query";
-import { useRouter } from "next/navigation";
 
 export default function TodoField() {
   const [task, setTask] = useState("");
   const [errorField, setErrorField] = useState("");
   const { user, todosQ } = useTodos();
-  const router = useRouter();
-
-  if (!user?.uid && typeof window !== "undefined") router.push("/login");
 
   const handleTask = (e: ChangeEvent<HTMLInputElement>) => {
     setErrorField("");

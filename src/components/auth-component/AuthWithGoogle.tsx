@@ -3,19 +3,16 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import googleIcon from "../../../public/ggl-icon.webp";
-import { arrayUnion, doc, getDoc, setDoc } from "firebase/firestore";
 import { signInWithPopup } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { auth, googleProvider, db } from "@/auth/config";
+import { auth, googleProvider } from "@/auth/config";
 import { useRouter } from "next/navigation";
 import { useTodos } from "@/context/TodosContext";
 
 export default function AuthWithGoogle() {
   const route = useRouter();
   const [messageError, setMessageError] = useState<string | null>(null);
-  const { user } = useTodos();
-
-  if (user?.uid && typeof window !== "undefined") route.push("/");
+  const { setUser } = useTodos();
 
   const renderErrorMessage = messageError ? (
     <span className='text-[0.8rem] text-red-500'>{messageError}</span>
@@ -27,15 +24,8 @@ export default function AuthWithGoogle() {
 
       if (register.user) {
         const user = register.user;
-        const todosRef = doc(db, "todos", user.uid);
 
-        const todosDocs = await getDoc(todosRef);
-
-        if (!todosDocs.exists()) {
-          await setDoc(todosRef, {
-            todos: arrayUnion()
-          });
-        }
+        setUser(user);
 
         route.push("/");
       }

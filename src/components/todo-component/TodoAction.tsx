@@ -2,7 +2,7 @@
 
 import { db } from "@/auth/config";
 import { useTodos } from "@/context/TodosContext";
-import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { ChangeEvent, useState } from "react";
 import { useMutation } from "react-query";
 
