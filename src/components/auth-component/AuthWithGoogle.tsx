@@ -38,8 +38,6 @@ export default function AuthWithGoogle() {
         }
 
         route.push("/");
-      } else {
-        throw FirebaseError;
       }
     } catch (error) {
       if (error instanceof FirebaseError) setMessageError(error.code);
